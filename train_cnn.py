@@ -87,10 +87,11 @@ def load_and_combine_data():
 
 # --- MODEL DEFINITION ---
 def build_cnn_model(num_classes):
-    """Defines a simple CNN architecture for orbit classification."""
     model = models.Sequential([
         
-        layers.Input(shape=(IMG_HEIGHT, IMG_WIDTH, 3)),
+        layers.Input(shape=(IMG_HEIGHT, IMG_WIDTH, 3)),  # ✅ correct
+        
+        layers.Conv2D(32, (3, 3), activation='relu'),   # ✅ first layer
         layers.MaxPooling2D((2, 2)),
         
         layers.Conv2D(64, (3, 3), activation='relu'),
@@ -101,14 +102,16 @@ def build_cnn_model(num_classes):
         
         layers.Flatten(),
         layers.Dense(256, activation='relu'),
-        layers.Dropout(0.5), 
+        layers.Dropout(0.5),
         layers.Dense(num_classes, activation='softmax')
     ])
-    
-    model.compile(optimizer='adam',
-                  loss='categorical_crossentropy',
-                  metrics=['accuracy'])
-    
+
+    model.compile(
+        optimizer='adam',
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
+
     return model
 
 # --- TRAINING EXECUTION ---
