@@ -31,7 +31,7 @@ CLASS_DESCRIPTIONS = {
 def load_model_and_names():
     """Loads the Keras model and class names, caching them for fast re-runs."""
     try:
-        model = tf.keras.models.load_model(MODEL_FILE)
+        model = tf.keras.models.load_model(MODEL_FILE, compile=False)
     except Exception as e:
         st.error(f"Error loading model '{MODEL_FILE}'. Please ensure 'train.py' was run successfully.")
         st.code(f"Details: {e}")
